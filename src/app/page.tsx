@@ -1,0 +1,30 @@
+import Link from "next/link";
+
+export default function Home() {
+  const games = [
+    { name: "Click Fast", path: "/clickfast" },
+    { name: "Memory Game", path: "/memorygame" },
+    { name: "Number Guesser", path: "/numberguesser" },
+    { name: "Word Scrambler", path: "/wordscrambler" },
+    { name: "Guess My Number", path: "/guessmynumber" },
+  ];
+
+  return (
+    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white px-4">
+      <h1 className="text-5xl font-bold mb-8 text-center tracking-wide">🎮 Game Hub</h1>
+      <p className="text-lg text-gray-300 mb-6">Select a game and start playing!</p>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-3xl">
+        {games.map((game, index) => (
+          <Link
+            key={index}
+            href={game.path}
+            className="px-6 py-4 bg-blue-600 hover:bg-blue-700 transition-transform transform hover:scale-105 text-white font-semibold text-lg rounded-lg text-center shadow-md w-full"
+          >
+            {game.name}
+          </Link>
+        ))}
+      </div>
+    </main>
+  );
+}
