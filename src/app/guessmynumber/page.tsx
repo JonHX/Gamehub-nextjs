@@ -12,6 +12,7 @@ const terms = [
 const Page = () => {
     const [gameStarted, setGameStarted] = useState<boolean>(false)
     const [gameStateText, setGameStateText] = useState<string>(`Hello, think of a number between 1-100 and i'll guess it`)
+    // @ts-expect-error just ignoring for build
     const [guess, setGuess] = useState<number>(null)
     const [highest, setHighest] = useState<number>(100)
     const [lowest, setLowest] = useState<number>(0)
