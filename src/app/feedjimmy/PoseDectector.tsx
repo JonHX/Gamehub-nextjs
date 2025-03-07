@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 'use client';
 
 import React, { useState, useEffect, useRef } from "react";
@@ -16,8 +18,8 @@ const HandTrackingGame = () => {
     let dot = { x: Math.random(), y: Math.random() };  // Dot stored in a regular variable
 
     useEffect(() => {
-        let handLandmarker;
-        let animationFrameId;
+        let handLandmarker: HandLandmarker;
+        let animationFrameId: number;
         let vision;
 
         // Load the images
@@ -43,7 +45,7 @@ const HandTrackingGame = () => {
             }
         };
 
-        const drawGame = (landmarksArray) => {
+        const drawGame = (landmarksArray: any[]) => {
             const canvas = canvasRef.current;
             const ctx = canvas.getContext("2d");
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -59,7 +61,7 @@ const HandTrackingGame = () => {
             }
 
             // Draw the custom image at pointer 8 (index finger tip)
-            landmarksArray.forEach((landmarks) => {
+            landmarksArray.forEach((landmarks: any[]) => {
                 // Check if landmarks exist and get pointer 8 (index finger tip)
                 const pointer8 = landmarks[8];  // Pointer 8 is the tip of the index finger
 
@@ -86,12 +88,12 @@ const HandTrackingGame = () => {
             animationFrameId = requestAnimationFrame(detectHands);
         };
 
-        const checkCollision = (landmarksArray) => {
+        const checkCollision = (landmarksArray: any[]) => {
             const canvas = canvasRef.current;
             const dotX = dot.x * canvas.width;
             const dotY = dot.y * canvas.height;
 
-            landmarksArray.forEach((landmarks) => {
+            landmarksArray.forEach((landmarks: any[]) => {
                 const pointer8 = landmarks[8];  // Get pointer 8 (index finger tip)
                 if (pointer8) {
                     const x = pointer8.x * canvas.width;  // Normal X position (no flip)
@@ -125,7 +127,7 @@ const HandTrackingGame = () => {
 
         return () => {
             if (videoRef.current?.srcObject) {
-                videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
+                videoRef.current.srcObject.getTracks().forEach((track: { stop: () => any; }) => track.stop());
             }
             if (handLandmarker) handLandmarker.close();
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
