@@ -2,14 +2,15 @@ import Link from "next/link";
 
 export default function Home() {
   const games = [
-    { name: "Click Fast", path: "/clickfast" },
-    { name: "Type Fast", path: "/typefast" },
-    { name: "Memory Game", path: "/memorygame" },
-    { name: "Number Guesser", path: "/numberguesser" },
-    { name: "Word Scrambler", path: "/wordscrambler" },
-    { name: "Guess My Number", path: "/guessmynumber" },
-    { name: "Feed Jimmy", path: "/feedjimmy"}
-  ];
+    { name: "⚡ Click Fast", path: "/clickfast" },
+    { name: "⌨️ Type Fast", path: "/typefast" },
+    { name: "🧠 Memory Game", path: "/memorygame" },
+    { name: "🔢 Number Guesser", path: "/numberguesser" },
+    { name: "🔤 Word Scrambler", path: "/wordscrambler" },
+    { name: "❓ Guess My Number", path: "/guessmynumber" },
+    { name: "🐍 Feed Jimmy", path: "/feedjimmy" }
+];
+
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white px-4">
