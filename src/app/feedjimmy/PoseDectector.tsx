@@ -14,7 +14,7 @@ const HandTrackingGame = () => {
 
     const [score, setScore] = useState(0);  // Use state for score
     const [timeLeft, setTimeLeft] = useState(20);  // Use state for time left
-    const [imageURL, setImageURL] = useState("https://cdn.creazilla.com/cliparts/68113/snake-face-clipart-xl.png");  // URL for the finger image
+    const [imageURL, setImageURL] = useState("https://png.pngtree.com/png-clipart/20230412/ourmid/pngtree-green-snake-head-png-image_6704095.png");  // URL for the finger image
     const [dotImageURL, setDotImageURL] = useState("https://purepng.com/public/uploads/large/purepng.com-rat-mousemouseanimalratmicerodent-981524651565fwflu.png");  // URL for the dot image
     let dot = { x: Math.random(), y: Math.random() };  // Dot stored in a regular variable
 
