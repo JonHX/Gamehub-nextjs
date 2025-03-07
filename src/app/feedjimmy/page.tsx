@@ -5,6 +5,8 @@ export default function Home() {
   return (
     <main>
         <h1 className="text-center text-3xl font-bold mb-4">Feed Jimmy the snake</h1>
+        <p className="mb-4">See how much you can feed jimmy the snake in X seconds. (use your finger(s)) (WIP)</p>
+        <h2></h2>
         <PoseDectector />
         <Link 
             href="/" 
