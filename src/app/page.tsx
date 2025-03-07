@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white px-4">
       <h1 className="text-5xl font-bold mb-8 text-center tracking-wide">🎮 Game Hub</h1>
-      <p className="text-lg text-gray-300 mb-6">Select a game and start playing!</p>
+      <p className="text-lg text-gray-300 mb-6">A random collection of react-games I speed coded to entertain the GF whilst she has no signal on the tube. Enjoy.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-3xl">
         {games.map((game, index) => (
