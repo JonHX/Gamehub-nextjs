@@ -7,7 +7,8 @@ export default function Home() {
     { name: "Memory Game", path: "/memorygame" },
     { name: "Number Guesser", path: "/numberguesser" },
     { name: "Word Scrambler", path: "/wordscrambler" },
-    { name: "Guess My Number", path: "/guessmynumber" }
+    { name: "Guess My Number", path: "/guessmynumber" },
+    { name: "Feed Jimmy", path: "/feedjimmy"}
   ];
 
   return (
