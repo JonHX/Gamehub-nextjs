@@ -35,6 +35,12 @@ This is a collection of fun mini-games built using **Next.js 15**, created as pa
 - The game provides feedback: "Too high," "Too low," or "Correct!"
 - Tracks the number of attempts.
 
+### 6️⃣ Feed Jimmy the Snake
+**The goal:** The objective of the game is to navigate around and feed the snake in time.
+- Use your finger(s) to navigate around and feed the snake in time.
+- The game will count how many snacks you can feed Jimmy in X seconds.
+- Will add more features in the future!
+
 ## 🚀 How to Run the Games Locally
 
 1. Clone the repository:
