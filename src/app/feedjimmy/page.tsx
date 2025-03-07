@@ -1,5 +1,5 @@
 import Link from "next/link";
-import PoseDectector from "./PoseDectector";
+import Canvas from "./canvas";
 
 export default function Home() {
   return (
@@ -10,7 +10,7 @@ export default function Home() {
       </p>
 
       <div className="w-full max-w-[600px] flex justify-center mt-4">
-          <PoseDectector />
+          <Canvas />
       </div>
 
       <Link 
