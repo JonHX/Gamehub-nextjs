@@ -197,7 +197,7 @@ const HandTrackingGame = () => {
                     </div>
                 )}
             </div>
-            <div className="flex flex-col items-center space-y-4">
+            <div className="w-full flex justify-center align-middle text-center items-center space-y-4" id="options">
                 <div className="border p-4 rounded-lg w-full max-w-[400px]">
                     <h2 className="text-xl font-semibold text-center mb-4">Options</h2>
                     <div className="flex flex-col space-y-2">
