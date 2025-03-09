@@ -257,17 +257,17 @@ const HandTrackingCanvas = () => {
                 <div
                     className="bg-red-500 text-white px-4 py-0 shadow-lg w-1/3 text-center"
                 >
-                    Clear Canvas
+                    Clear
                 </div>
                 <div
                     className="bg-orange-500 text-white px-4 py-0 shadow-lg  w-1/3 text-center"
                 >
-                    Decrease Brush Size
+                    Brush Size++
                 </div>
                 <div
                     className="bg-green-500 text-white px-4 py-0 shadow-lg w-1/3 text-center"
                 >
-                    Increase Brush Size
+                    Brush Size--
                 </div>
             </div>
         </div>
