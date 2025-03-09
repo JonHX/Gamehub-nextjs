@@ -118,7 +118,7 @@ const HandTrackingCanvas = () => {
                         }
                         // Decrease brush size if finger is over the 'Decrease Brush Size' button
                         else if (x >= buttonWidth && x <= buttonWidth * 2 && y >= 0 && y <= buttonHeight) {
-                            brushSizeRef.current = Math.max(brushSizeRef.current - 10, 3); // Decrease brush size, min size 10
+                            brushSizeRef.current = Math.max(brushSizeRef.current - 10, 5); // Decrease brush size, min size 10
                         }
 
                         // Check if the finger is touching the 'Clear Canvas' button
