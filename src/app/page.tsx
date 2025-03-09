@@ -8,8 +8,9 @@ export default function Home() {
     { name: "🔢 Number Guesser", path: "/numberguesser" },
     { name: "🔤 Word Scrambler", path: "/wordscrambler" },
     { name: "❓ Guess My Number", path: "/guessmynumber" },
-    { name: "🐍 Feed Jimmy", path: "/feedjimmy" }
-];
+    { name: "🐍 Feed Jimmy", path: "/feedjimmy" },
+    { name: "🎨 Finger Paint", path: "/fingerpaint" }  // Added Finger Paint to the list
+  ];
 
 
   return (

@@ -107,7 +107,7 @@ const HandTrackingCanvas = () => {
             // Handle the button clicks
             const checkButtonClick = (landmarksArray: any[]) => {
                 // Detect if any finger touches one of the buttons
-                landmarksArray.forEach((landmarks: any[], handIndex: number) => {
+                landmarksArray.forEach((landmarks: any[]) => {
                     const pointer8 = landmarks[8]; // Pointer 8 is the tip of the index finger
         
                     if (pointer8) {
