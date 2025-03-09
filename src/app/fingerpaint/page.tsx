@@ -20,7 +20,7 @@ export default function Home() {
       {/* Back to Menu Link */}
       <Link 
           href="/" 
-          className="fixed top-4 left-4 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white font-semibold text-sm md:text-md rounded-lg shadow-md transition-all duration-300"
+          className="fixed top-3 left-4 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white font-semibold text-sm md:text-md rounded-lg shadow-md transition-all duration-300"
       >
           ⬅ Back to Menu
       </Link>

@@ -254,19 +254,13 @@ const HandTrackingCanvas = () => {
     
             {/* Overlay divs as buttons */}
             <div className="absolute top-0 left-0 w-full flex justify-between z-10">
-                <div
-                    className="bg-red-500 text-white px-4 py-0 shadow-lg w-1/3 text-center"
-                >
+                <div className="bg-red-500 text-white text-sm sm:text-base px-2 sm:px-4 py-1 sm:py-0 shadow-lg w-1/3 text-center">
                     Clear
                 </div>
-                <div
-                    className="bg-orange-500 text-white px-4 py-0 shadow-lg  w-1/3 text-center"
-                >
+                <div className="bg-orange-500 text-white text-sm sm:text-base px-2 sm:px-4 py-1 sm:py-0 shadow-lg w-1/3 text-center">
                     Brush Size++
                 </div>
-                <div
-                    className="bg-green-500 text-white px-4 py-0 shadow-lg w-1/3 text-center"
-                >
+                <div className="bg-green-500 text-white text-sm sm:text-base px-2 sm:px-4 py-1 sm:py-0 shadow-lg w-1/3 text-center">
                     Brush Size--
                 </div>
             </div>
