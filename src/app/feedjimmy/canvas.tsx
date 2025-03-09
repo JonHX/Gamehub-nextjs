@@ -6,29 +6,30 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FilesetResolver, HandLandmarker } from "@mediapipe/tasks-vision";
 
-const HandTrackingGame = () => {
+const Canvas = () => {
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
-    const timerRef = useRef(null);  // Store the timer interval in a ref
-    const gameStartedRef = useRef(false);  // Use ref for gameStarted
+    const pointsCanvasRef = useRef(null); // Second canvas for hand points
+    const timerRef = useRef(null);
+    const gameStartedRef = useRef(false);
 
-    const [score, setScore] = useState(0);  // Use state for score
-    const [timeLeft, setTimeLeft] = useState(20);  // Use state for time left
-    const [imageURL, setImageURL] = useState("https://png.pngtree.com/png-clipart/20230412/ourmid/pngtree-green-snake-head-png-image_6704095.png");  // URL for the finger image
-    const [dotImageURL, setDotImageURL] = useState("https://purepng.com/public/uploads/large/purepng.com-rat-mousemouseanimalratmicerodent-981524651565fwflu.png");  // URL for the dot image
-    let dot = { x: Math.random(), y: Math.random() };  // Dot stored in a regular variable
+    const [score, setScore] = useState(0);
+    const [timeLeft, setTimeLeft] = useState(20);
+    const [imageURL, setImageURL] = useState("https://png.pngtree.com/png-clipart/20230412/ourmid/pngtree-green-snake-head-png-image_6704095.png");
+    const [dotImageURL, setDotImageURL] = useState("https://purepng.com/public/uploads/large/purepng.com-rat-mousemouseanimalratmicerodent-981524651565fwflu.png");
+    const [showPointsCanvas, setShowPointsCanvas] = useState(false); // State to toggle second canvas
+    let dot = { x: Math.random(), y: Math.random() };
 
     useEffect(() => {
         let handLandmarker: HandLandmarker;
         let animationFrameId: number;
         let vision;
 
-        // Load the images
         const image = new Image();
-        image.src = imageURL;  // Use the state URL for the image
+        image.src = imageURL;
 
-        const dotImage = new Image();  // Image for the red dot
-        dotImage.src = dotImageURL;  // Use the state URL for the dot image
+        const dotImage = new Image();
+        dotImage.src = dotImageURL;
 
         const initializeHandDetection = async () => {
             try {
@@ -38,7 +39,7 @@ const HandTrackingGame = () => {
                 handLandmarker = await HandLandmarker.createFromOptions(vision, {
                     baseOptions: { modelAssetPath: "/models/hand_landmarker.task" },
                     numHands: 2,
-                    runningMode: "video",
+                    runningMode: "VIDEO",
                 });
                 detectHands();
             } catch (error) {
@@ -51,29 +52,52 @@ const HandTrackingGame = () => {
             const ctx = canvas.getContext("2d");
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw the custom dot image
-            if (dotImage.complete) {  // Ensure the image is loaded before drawing
+            if (dotImage.complete) {
                 const dotX = dot.x * canvas.width;
                 const dotY = dot.y * canvas.height;
-                const size = 30;  // Adjust size as needed
+                const size = 80;
 
-                // Draw the dot image without flipping
-                ctx.drawImage(dotImage, dotX - size / 2, dotY - size / 2, size, size);  // Draw the dot image
+                ctx.drawImage(dotImage, dotX - size / 2, dotY - size / 2, size, size);
             }
 
-            // Draw the custom image at pointer 8 (index finger tip)
             landmarksArray.forEach((landmarks: any[]) => {
-                // Check if landmarks exist and get pointer 8 (index finger tip)
-                const pointer8 = landmarks[8];  // Pointer 8 is the tip of the index finger
+                const pointer8 = landmarks[8];
 
-                if (pointer8 && image.complete) {  // Ensure the image is loaded before drawing
+                if (pointer8 && image.complete) {
                     const x = pointer8.x * canvas.width;
                     const y = pointer8.y * canvas.height;
-                    const size = 30;  // Adjust size as needed
+                    const size = 80;
 
-                    // Draw image at pointer 8 without flipping
-                    ctx.drawImage(image, x - size / 2, y - size / 2, size, size);  // Draw image at pointer 8
+                    // To keep the image in its aspect ratio and prevent distortion, use the naturalWidth and naturalHeight of the image
+                    const aspectRatio = image.naturalWidth / image.naturalHeight;
+                    const imageWidth = size;
+                    const imageHeight = imageWidth / aspectRatio;
+
+                    ctx.drawImage(image, x - imageWidth / 2, y - imageHeight / 2, imageWidth, imageHeight);
                 }
+            });
+
+            if (showPointsCanvas) {
+                drawHandPoints(landmarksArray);  // Draw points on the second canvas
+            }
+        };
+
+        const drawHandPoints = (landmarksArray: any[]) => {
+            const pointsCanvas = pointsCanvasRef.current;
+            const pointsCtx = pointsCanvas.getContext("2d");
+            pointsCtx.clearRect(0, 0, pointsCanvas.width, pointsCanvas.height);
+
+            landmarksArray.forEach((landmarks: any[]) => {
+                landmarks.forEach((landmark: any) => {
+                    if (landmark) {
+                        const x = landmark.x * pointsCanvas.width;
+                        const y = landmark.y * pointsCanvas.height;
+                        pointsCtx.beginPath();
+                        pointsCtx.arc(x, y, 3, 0, Math.PI * 2);  // Increase point size
+                        pointsCtx.fillStyle = "white";
+                        pointsCtx.fill();
+                    }
+                });
             });
         };
 
@@ -95,20 +119,16 @@ const HandTrackingGame = () => {
             const dotY = dot.y * canvas.height;
 
             landmarksArray.forEach((landmarks: any[]) => {
-                const pointer8 = landmarks[8];  // Get pointer 8 (index finger tip)
+                const pointer8 = landmarks[8];
                 if (pointer8) {
-                    const x = pointer8.x * canvas.width;  // Normal X position (no flip)
+                    const x = pointer8.x * canvas.width;
                     const y = pointer8.y * canvas.height;
 
-                    // Adjust the distance threshold for collision detection
                     const distance = Math.hypot(x - dotX, y - dotY);
 
-                    if (distance < 20) {  // Increased distance threshold for collision
+                    if (distance < 50) {
                         if (gameStartedRef.current) setScore(prevScore => prevScore + 1);
-                        dot = {  // Update the dot position directly
-                            x: Math.random() * 0.9 + 0.05,
-                            y: Math.random() * 0.9 + 0.05,
-                        };
+                        dot = { x: Math.random() * 0.9 + 0.05, y: Math.random() * 0.9 + 0.05 };
                     }
                 }
             });
@@ -132,9 +152,9 @@ const HandTrackingGame = () => {
             }
             if (handLandmarker) handLandmarker.close();
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            if (timerRef.current) clearInterval(timerRef.current);  // Clear interval correctly
+            if (timerRef.current) clearInterval(timerRef.current);
         };
-    }, [imageURL, dotImageURL]);  // Re-run effect when image URLs change
+    }, [imageURL, dotImageURL, showPointsCanvas]);
 
     const startTimer = () => {
         timerRef.current = setInterval(() => {
@@ -152,7 +172,7 @@ const HandTrackingGame = () => {
     const startOrResetGame = () => {
         gameStartedRef.current = true;
         setScore(0);
-        setTimeLeft(20);  // Reset time to 10 when starting a new game
+        setTimeLeft(20);
         startTimer();
     };
 
@@ -165,18 +185,29 @@ const HandTrackingGame = () => {
                     playsInline
                     className="transform scale-x-[-1] w-full h-auto rounded-md shadow-lg"
                     style={{ maxWidth: "600px", height: "450px" }}
+                    width="600px"
+                    height="450px"
                 ></video>
                 <canvas
                     ref={canvasRef}
                     className="absolute top-0 left-0 w-full h-full rounded-md pointer-events-none transform scale-x-[-1]"
-                    style={{ maxWidth: "600px", height: "450px" }}
+                    width="600px"
+                    height="450px"
                 ></canvas>
+                {showPointsCanvas && (
+                    <canvas
+                        ref={pointsCanvasRef}
+                        className="transform scale-x-[-1] absolute top-0 left-0 w-full h-full rounded-md pointer-events-none"
+                        width="600px"
+                        height="450px"
+                    ></canvas>
+                )}
             </div>
             <div className="w-full text-center mt-6">
                 {!gameStartedRef.current && (
                     <button
                         onClick={startOrResetGame}
-                        className="px-6 py-3 bg-blue-600 text-white text-lg rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none"
+                        className="cursor-pointer px-6 py-3 bg-blue-600 text-white text-lg rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none"
                     >
                         Start Game
                     </button>
@@ -209,7 +240,7 @@ const HandTrackingGame = () => {
                             className="border p-2 rounded-md"
                         />
                     </div>
-                    
+
                     <div className="flex flex-col space-y-2 mt-4">
                         <label className="text-lg font-semibold">Dot Image URL</label>
                         <input
@@ -219,12 +250,20 @@ const HandTrackingGame = () => {
                             className="border p-2 rounded-md"
                         />
                     </div>
+
+                    <div className="flex items-center space-x-2 mt-4">
+                        <label className="text-lg font-semibold">Show Hand Points</label>
+                        <input
+                            type="checkbox"
+                            checked={showPointsCanvas}
+                            onChange={(e) => setShowPointsCanvas(e.target.checked)}
+                            className="border p-2 rounded-md"
+                        />
+                    </div>
                 </div>
             </div>
-
-            
         </div>
     );
 };
 
-export default HandTrackingGame;
+export default Canvas;
