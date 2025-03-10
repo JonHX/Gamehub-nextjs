@@ -9,14 +9,14 @@ export default function Home() {
     { name: "🔤 Word Scrambler", path: "/wordscrambler" },
     { name: "❓ Guess My Number", path: "/guessmynumber" },
     { name: "🐍 Feed Jimmy", path: "/feedjimmy" },
-    { name: "🎨 Finger Paint", path: "/fingerpaint" }  // Added Finger Paint to the list
+    { name: "🎨 Finger Paint", path: "/fingerpaint" }
   ];
 
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white px-4">
+    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white px-4 py-4">
       <h1 className="text-5xl font-bold mb-8 text-center tracking-wide">🎮 Game Hub</h1>
-      <p className="text-lg text-gray-300 mb-6">A random collection of react-games I speed coded to entertain the GF whilst she has no signal on the tube. Enjoy.</p>
+      <p className="text-lg text-gray-300 mb-6 text-center">A random collection of react-games I speed coded to entertain the GF whilst she has no signal on the tube. <br/>By <a className="text-amber-300" href="https://www.linkedin.com/in/jtarrant/">Jon Tarrant</a></p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-3xl">
         {games.map((game, index) => (
