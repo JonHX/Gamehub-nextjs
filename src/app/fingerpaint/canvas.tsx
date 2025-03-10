@@ -229,15 +229,18 @@ const HandTrackingCanvas = () => {
     return (
         <div className="flex justify-center items-center flex-col space-y-6">
             <div className="relative flex justify-center items-center w-full max-w-[600px]">
-                <video
-                    ref={videoRef}
-                    autoPlay
-                    playsInline
-                    className="w-full h-auto rounded-md shadow-lg transform scale-x-[-1]"
-                    style={{ maxWidth: "600px", height: "450px" }}
-                    width="450px"
-                    height="600px"
-                ></video>
+            <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                className="rounded-md shadow-lg transform scale-x-[-1]"
+                style={{ 
+                    maxWidth: "100%", 
+                    height: "auto", 
+                    aspectRatio: "16/12", // Or dynamically set based on webcam aspect ratio
+                    objectFit: "cover" // Ensures the video fills without distortion
+                }}
+            ></video>
 
                 <canvas
                     ref={canvasRef}
