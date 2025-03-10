@@ -3,7 +3,7 @@ import HandTrackingCanvas from "./canvas";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen px-4 py-6 relative">
+    <main className="flex flex-col items-center min-h-screen px-4 top-20 lg:top-0 relative">
       {/* Updated title */}
       <h1 className="text-3xl font-bold mb-2 text-center">Finger Paint</h1>
 
