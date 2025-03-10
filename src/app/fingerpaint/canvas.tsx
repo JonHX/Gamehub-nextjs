@@ -10,7 +10,7 @@ const HandTrackingCanvas = () => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const handLandmarkerRef = useRef<HandLandmarker | null>(null); // Store hand landmarker instance
-    const fingerColorsRef = useRef<string[]>(["#FF5733", "#33FF57"]); // Ref to store finger colors (two colors for two hands)
+    const fingerColorsRef = useRef<string[]>(["#FF0000", "#FF0000"]); // Ref to store finger colors (two colors for two hands)
     const drawnColors = useRef<{ color: string, x: number, y: number, size: number }[]>([]); // Ref to store drawn colors on canvas
     const brushSizeRef = useRef<number>(20); // Default brush size (no state, to avoid re-renders)
     const colorPickerColors = [
