@@ -69,7 +69,6 @@ const HandTrackingCanvas = () => {
         });
     };
 
-    // Handle button clicks
     const handleButtonClick = (landmarks: any[], canvas: HTMLCanvasElement) => {
         const buttonWidth = canvas.width / 3;
         const buttonHeight = 30;
@@ -91,7 +90,7 @@ const HandTrackingCanvas = () => {
         });
     };
 
-    // Handle color picker clicks
+    
     const handleColorPickerClick = (landmarks: any[], canvas: HTMLCanvasElement) => {
         const colorPickerWidth = canvas.width / colorPickerColors.length;
         const colorPickerHeight = 30;
@@ -243,42 +242,82 @@ const HandTrackingCanvas = () => {
         };
     }, []);
 
+    const captureCanvasAndVideo = () => {
+        const video = document.getElementById("cam");
+        const canvas = document.getElementById("canvas");
+        const outputCanvas = document.createElement("canvas");
+        const ctx = outputCanvas.getContext("2d");
+      
+        outputCanvas.width = canvas.width;
+        outputCanvas.height = canvas.height;
+      
+        // Draw the video frame
+        ctx.drawImage(video, 0, 0, outputCanvas.width, outputCanvas.height);
+        
+        // Draw the overlay canvas
+        ctx.drawImage(canvas, 0, 0);
+
+        // Convert to image
+        const imgData = outputCanvas.toDataURL("image/jpeg");
+
+        // Create a temporary link for downloading
+        const link = document.createElement("a");
+        link.href = imgData;
+        link.download = "fingerPaintSnapshot";
+
+        // Auto-download on click
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Clean up: remove the temporary canvas
+        outputCanvas.remove();
+    }
+
     return (
-<div className="flex justify-center items-center flex-col space-y-6">
-  <div className="relative flex justify-center items-center w-full min-w-[300px] md:min-w-[600px] max-w-[800px] h-[300px] md:h-[500px] bg-gray-200 rounded-md shadow-lg overflow-hidden">
-    {/* Video element */}
-    <video
-      ref={videoRef}
-      autoPlay
-      playsInline
-      className="absolute top-0 left-0 w-full h-full object-cover transform scale-x-[-1]"
-    ></video>
+        <div className="flex justify-center items-center flex-col space-y-6">
+            <div className="relative flex justify-center items-center w-full min-w-[300px] md:min-w-[600px] max-w-[800px] h-[300px] md:h-[500px] bg-gray-200 rounded-md shadow-lg overflow-hidden">
+                {/* Video element */}
+                <video
+                ref={videoRef}
+                id="cam"
+                autoPlay
+                playsInline
+                className="absolute top-0 left-0 w-full h-full object-cover transform scale-x-[-1]"
+                ></video>
 
-    {/* Canvas element */}
-    <canvas
-      ref={canvasRef}
-      className="absolute top-0 left-0 w-full h-full pointer-events-none"
-    ></canvas>
+                {/* Canvas element */}
+                <canvas
+                ref={canvasRef}
+                id="canvas"
+                className="absolute top-0 left-0 w-full h-full pointer-events-none"
+                ></canvas>
 
-    {/* Buttons */}
-    <div className="absolute top-0 left-0 w-full flex justify-between z-10">
-      {/* Clear Button */}
-      <div className="bg-red-500 text-white text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 shadow-lg w-1/3 text-center rounded-tl-lg flex items-center justify-center leading-tight truncate">
-        Clear
-      </div>
+                {/* Buttons */}
+                <div className="absolute top-0 left-0 w-full flex justify-between z-10">
+                {/* Clear Button */}
+                <div className="bg-red-500 text-white text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 shadow-lg w-1/3 text-center rounded-tl-lg flex items-center justify-center leading-tight truncate">
+                    Clear
+                </div>
 
-      {/* Brush Size-- Button */}
-      <div className="bg-orange-500 text-white text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 shadow-lg w-1/3 text-center flex items-center justify-center leading-tight truncate">
-        Brush Size--
-      </div>
+                {/* Brush Size-- Button */}
+                <div className="bg-orange-500 text-white text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 shadow-lg w-1/3 text-center flex items-center justify-center leading-tight truncate">
+                    Brush Size--
+                </div>
 
-      {/* Brush Size++ Button */}
-      <div className="bg-green-500 text-white text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 shadow-lg w-1/3 text-center rounded-tr-lg flex items-center justify-center leading-tight truncate">
-        Brush Size++
-      </div>
-    </div>
-  </div>
-</div>
+                {/* Brush Size++ Button */}
+                <div className="bg-green-500 text-white text-xs sm:text-sm px-2 py-1 sm:px-4 sm:py-2 shadow-lg w-1/3 text-center rounded-tr-lg flex items-center justify-center leading-tight truncate">
+                    Brush Size++
+                </div>
+                </div>
+            </div>
+            <button 
+                onClick={captureCanvasAndVideo} 
+                className="cursor-pointer px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                >
+                Capture Snapshot! 
+            </button>
+        </div>
     );
 };
 
